@@ -39,6 +39,7 @@ The book’s title should be updated to "Nineteen Eighty-Four" in the database."
 ## Command:
 
 ```python
+from bookshelf.models import Book
 book.delete()
 books = Book.objects.all()
 print(books)
