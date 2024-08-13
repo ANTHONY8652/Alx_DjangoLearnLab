@@ -4,40 +4,31 @@
 This document details the CRUD (Create, Retrieve, Update, Delete) operations performed on the `Book` model within the `bookshelf` Django app. Each operation is accompanied by the relevant Python commands, explanations, and expected outcomes.
 
 ## 1. Create Operation
-**Command:**
-```python
-book = Book.objects.create(title="1984", author="George Orwell", publication_year=1949)
-book.save()
-
-# Create Operation
-
-## Command:
+**Command**
 ```python
 book = Book.objects.create(title="1984", author="George Orwell", publication_year=1949)
 book.save()
 """Expected Output:
 A new Book instance should be successfully created and stored in the database."""
-# Retrieve Operation
 
-## Command:
+## 2. Retrieve Operation
+**Command**
 ```python
 book = Book.objects.get(title="1984")
 print(book)
 """Expected Output:
 The details of the book with the title "1984" should be displayed."""
 
-# Update Operation
-
-## Command:
+## 3. Update Operation
+**Command**
 ```python
 book.title = "Nineteen Eighty-Four"
 book.save()
 """Expected Output:
 The book’s title should be updated to "Nineteen Eighty-Four" in the database."""
 
-# Delete Operation
-## Command:
-
+## 4. Delete Operation
+**Command**
 ```python
 from bookshelf.models import Book
 book.delete()
