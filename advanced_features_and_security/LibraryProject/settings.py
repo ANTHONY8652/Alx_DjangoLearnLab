@@ -1,9 +1,3 @@
-from pathlib import Path
-
-CSP_DEFAULT_SRC = ("'self'",)
-CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com')
-CSP_SCRIPT_SRC = ("'self'", 'https://code.jquery.com')
-
 DEBUG = False
 
 SECURE_BROWSER_XSS_FILTER = True
@@ -15,6 +9,13 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 CSRF_COOKIE_SECURE = True
 
 SESSION_COOKIE_SECURE = True
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com')
+CSP_SCRIPT_SRC = ("'self'", 'https://code.jquery.com')
+
+
+from pathlib import Path
 
 
 
