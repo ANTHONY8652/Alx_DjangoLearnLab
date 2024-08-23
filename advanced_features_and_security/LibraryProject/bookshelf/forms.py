@@ -1,10 +1,10 @@
 from django import forms
 from .models import MyModel
 
-class MyForm(forms.ModelForm):
+class ExampleForm(forms.ModelForm):
     class Meta:
         model = MyModel
-        fields = ['name', 'email']
+        fields = ['name', 'email']  # Fields included in the form
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
@@ -14,6 +14,6 @@ class MyForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if not '@' in email:
+        if '@' not in email:
             raise forms.ValidationError("Enter a valid email address.")
         return email
