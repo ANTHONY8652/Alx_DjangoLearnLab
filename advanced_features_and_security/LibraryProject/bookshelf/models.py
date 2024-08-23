@@ -7,8 +7,12 @@ class Book(models.Model):
     author = models.CharField(max_length=100)
     publication_year = models.IntegerField()
     
-    def __str__(self):
-        return self.title
+    class Meta:
+        permissions = [
+            ("can_add_book", "Can add book"),
+            ("can_delete_book", "Can delete book"),
+            ("can_change_book", "Can change book")
+        ]
     
 
 class CustomUserManager(BaseUserManager):
