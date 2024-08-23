@@ -1,8 +1,6 @@
 from django.contrib import admin
-from .models import Book
-from django.contrib import admin
+from .models import Book, CustomUser
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
