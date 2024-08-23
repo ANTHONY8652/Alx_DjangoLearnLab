@@ -23,7 +23,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8g$ut^vx(r^xrv$$!@@qhc$!g)%mi1#+328_a2su$x&+2l=@q^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+SECURE_BROWSER_XSS_FILTER = True
+
+X_FRAME_OPTIONS = 'DENY'
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+CSRF_COOKIE_SECURE = True
+
+SESSION_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = []
 
@@ -48,7 +58,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com')
+CSP_SCRIPT_SRC = ("'self'", 'https://code.jquery.com')
 
 ROOT_URLCONF = 'LibraryProject.urls'
 

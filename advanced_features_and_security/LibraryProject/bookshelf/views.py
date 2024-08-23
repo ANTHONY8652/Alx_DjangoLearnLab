@@ -1,8 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import permission_required
-from .models import Post, Book
+from .models import Post, Book, MyModel
 from django.http import HttpResponse
-from .forms import BookForm
+from django import forms
+
+def search_view(request):
+    query = request.GET.get('q')
+    results = MyModel.objects.filter(name__icontains=query)
+    return render(request, 'results.html', {'results': results})
 
 @permission_required('bookshelf.can_add_book')
 def add_book(request):
@@ -50,6 +55,20 @@ def delete_post(request, post_id):
     if request.method == "POST":
         post.delete()
     return redirect('bookshelf:post_list')
+
+
+class MyForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    
+def submit_view(request):
+    if request.method == 'POST':
+        form = MyForm(request.POST)
+        if form.is_valid():
+            pass
+        
+    else:
+        form = MyForm()
+        return render(request, 'submit.html', {'form': form})
 
 
 # Create your views here.
