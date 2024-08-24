@@ -1,10 +1,10 @@
 from django import forms
-from .models import MyModel
+from .models import CustomUser
 
 class ExampleForm(forms.ModelForm):
     class Meta:
-        model = MyModel
-        fields = ['name', 'email']  # Fields included in the form
+        model = CustomUser
+        fields = ['name', 'email']
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
