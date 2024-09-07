@@ -1,17 +1,23 @@
+# /api/test_views.py
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
+from django.contrib.auth.models import User
 from .models import Book
-from .serializers import BookSerializer
-self.client.login
 
 class BookAPITests(APITestCase):
 
     def setUp(self):
+        # Create test user
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')  # Log in the test user
+
+        # Create test data
         self.book1 = Book.objects.create(title="Book One", author="Author A", publication_year=2020)
         self.book2 = Book.objects.create(title="Book Two", author="Author B", publication_year=2021)
-        self.list_url = reverse('book-list')
-        self.detail_url = lambda pk: reverse('book-detail', kwargs={'pk': pk})
+        self.list_url = reverse('book-list')  # Adjust with your actual URL name
+        self.detail_url = lambda pk: reverse('book-detail', kwargs={'pk': pk})  # Detail view URL
 
     def test_create_book(self):
         data = {
@@ -27,7 +33,7 @@ class BookAPITests(APITestCase):
     def test_get_books(self):
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data), 2)  # Verify the number of books returned
 
     def test_update_book(self):
         data = {
@@ -63,5 +69,7 @@ class BookAPITests(APITestCase):
         self.assertEqual(response.data[0]['publication_year'], 2020)
 
     def test_access_control(self):
+        # Test unauthorized access
+        self.client.logout()  # Log out the user
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
