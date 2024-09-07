@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from .models import Book
 from .serializers import BookSerializer
+self.client.login
 
 class BookAPITests(APITestCase):
 
