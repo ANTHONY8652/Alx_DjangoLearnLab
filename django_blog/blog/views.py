@@ -13,10 +13,10 @@ def register_view(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Registration successful.")
-            return redirect('profile')
+            return redirect('profile.html')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'registration/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -27,7 +27,7 @@ def login_view(request):
             return redirect('profile')
     else:
         form = AuthenticationForm()
-    return render(request, 'registration/login.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
@@ -35,4 +35,4 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    return render(request, 'registration/profile.html', {'user': request.user})
+    return render(request, 'profile.html', {'user': request.user})
