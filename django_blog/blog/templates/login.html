@@ -1,7 +1,7 @@
 <h2>Login</h2>
 <form method="post">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'static/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'static/styles.css' %}">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Login</button>
