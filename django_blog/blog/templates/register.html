@@ -1,6 +1,6 @@
 <h2>Register</h2>
 {% load static %}
-<link rel="stylesheet" href="{% static 'static/styles.css' %}">
+<link rel="stylesheet" href="{% static 'static/css/styles.css' %}">
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
