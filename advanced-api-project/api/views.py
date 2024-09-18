@@ -9,7 +9,7 @@ from django_filters import rest_framework
 
 #List all boooks
 #Book list view with filtering
-class BookListView(generics.ListApiView):
+class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -29,7 +29,7 @@ class BookDetailView(generics.RetrieveAPIView):
 class BookCreateView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
 
 #Update an existing book
 class BookUpdateView(generics.UpdateAPIView):
