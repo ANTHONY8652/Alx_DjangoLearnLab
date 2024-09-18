@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    password = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(write_only=True, required=True)
     token = serializers.SerializerMethodField()
 
     class Meta:
@@ -25,7 +25,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({'password': 'Passwords must match'})
+            raise serializers.ValidationError({'password': 'Passwords do not match'})
         return attrs
 
     def create(self, validated_data):
@@ -41,10 +41,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
     
     def get_token(self, obj):
-        token = Token.objects.get_or_create(user=obj)
+        token, created = Token.objects.get_or_create(user=obj)
         return token.key
     
-class LoginSerializer(serializers.ModelSerializer):
+class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
 
