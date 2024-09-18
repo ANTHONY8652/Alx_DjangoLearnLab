@@ -57,3 +57,5 @@ class LoginSerializer(serializers.Serializer):
                 'token': token.key
             }
         raise serializers.ValidationError('The credentials you entered were invalid. Please try again')
+
+["Token.objects.create", "get_user_model().objects.create_user"]
