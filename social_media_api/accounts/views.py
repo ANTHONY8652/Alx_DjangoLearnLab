@@ -53,3 +53,5 @@ class UserListView(generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+    
+accounts/views.py doesn't contain: ["permissions.IsAuthenticated"]
