@@ -45,7 +45,7 @@ class UnfollowUserView(APIView):
         request.user.following.remove(user_to_unfollow)
         return Response({'message': f'You have unfollowed {user_to_unfollow.username}'})
     
-class UserListView(generics.ListAPIView):
+class UserListView(generics.GenericAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
