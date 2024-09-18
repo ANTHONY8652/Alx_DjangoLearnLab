@@ -7,7 +7,6 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
-from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from .models import CustomUser
 
@@ -35,7 +34,7 @@ class FollowUserView(APIView):
 
     def post(self, request, user_id):
         user_to_follow = get_object_or_404(CustomUser, id=user_id)
-        request.user.followng.add(user_to_follow)
+        request.user.following.add(user_to_follow)
         return Response({'message': f'You are now following {user_to_follow.username}'})
     
 class UnfollowUserView(APIView):
@@ -46,7 +45,7 @@ class UnfollowUserView(APIView):
         request.user.following.remove(user_to_unfollow)
         return Response({'message': f'You have unfollowed {user_to_unfollow.username}'})
     
-class UserListView(generics.GenericAPIView):
+class UserListView(generics.ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
@@ -54,4 +53,3 @@ class UserListView(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
     
-accounts/views.py doesn't contain: ["permissions.IsAuthenticated"]
