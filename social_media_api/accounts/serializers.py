@@ -17,7 +17,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password', 'token']
+        fields = ['id', 'username', 'email', 'password', 'password2', 'token']
         extra_kwargs = {
             'password': {'write_only': True},
             'token': {'read_only': True},
@@ -30,14 +30,12 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop('password2')
-
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password'],
         )
-        token, created = Token.objects.get_or_create(user=user)
-        
+        Token.objects.get_or_create(user=user)
         return user
     
     def get_token(self, obj):
@@ -58,4 +56,4 @@ class LoginSerializer(serializers.Serializer):
             }
         raise serializers.ValidationError('The credentials you entered were invalid. Please try again')
 
-["Token.objects.create", "get_user_model().objects.create_user"]
+##["Token.objects.create", "get_user_model().objects.create_user"]
