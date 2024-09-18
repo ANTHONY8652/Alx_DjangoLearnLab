@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -10,6 +10,7 @@ from .forms import PostForm, CommentForm
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DeleteView, CreateView, UpdateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from taggit.models import Tag
 
 ##Posts view list delete detail
 class PostListView(ListView):
@@ -122,10 +123,34 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 ##View to handle searches
 def search_view(request):
     query = request.GET.get('q')
-    results = Post.objects.filter(
-        Q(title__icontains=query) |
-        Q(content__icontains=query) |
-        Q(tags__name__icontains=query)
-    ).distinct()
-    
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(tags__name__icontains=query)
+        ).distinct()
+    else:
+        results = Post.objects.none()
     return render(request, 'blog/search_results.html', {'results': results, 'query': query})
+
+def tagged_posts(request, tag_slug):
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    posts = Post.objects.filter(tags=tag)
+    return render(request, 'blog/search_results.html', {'posts':posts, 'tag': tag})
+
+
+##View to handle tags
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/post_list_by_tag.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('tag_slug')
+        return Post.objects.filter(tags__slug=tag_slug)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag_slug = self.kwargs.get('tag_slug')
+        context['tag'] = Tag.objects.get(slug=tag_slug)
+        return context

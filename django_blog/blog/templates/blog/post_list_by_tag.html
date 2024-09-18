@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts tagged with "{{ tag.name }}"</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Posts tagged with "{{ tag.name }}"</h1>
+        <a href="{% url 'post_list' %}">Back to Post List</a>
+    </header>
+
+    <main>
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+                    <p>{{ post.content|slice:":100" }}...</p>
+                </li>
+            {% empty %}
+                <p>No posts found with this tag.</p>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>
