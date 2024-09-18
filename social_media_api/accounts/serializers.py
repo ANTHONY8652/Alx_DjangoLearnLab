@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    token = serializers.SerializersMethodField()
+    token = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -29,7 +29,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
     
     def get_token(self, obj):
-        token = Token.objects.get(user=obj)
+        token = Token.objects.get_or_create(user=obj)
         return token.key
     
 class LoginSerializer(serializers.ModelSerializer):
