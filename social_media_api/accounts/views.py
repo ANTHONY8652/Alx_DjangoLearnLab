@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import get_user_model
-from .serializers import UserSerializer
+from .serializers import UserSerializer, LoginSerializer
 from django.shortcuts import get_object_or_404
 from .models import CustomUser
 
@@ -27,6 +27,19 @@ class RegisterUser(APIView):
 ##View for user login with token authentication
 class LoginUser(ObtainAuthToken):
     pass
+    
+    
+"""
+class LoginUser(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            token = serializer.validated_data.get('token')
+            return Response({'token': token}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+"""
 
 ##Followers and Following views
 class FollowUserView(APIView):
@@ -52,4 +65,3 @@ class UserListView(generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
-    
