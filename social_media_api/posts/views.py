@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from django_filters import rest_framework as filters
@@ -38,7 +37,7 @@ class PostFilter(filters.FilterSet):
         fields = ['title']
 
 ##Feed functionarity
-class FeedView(APIView):
+class FeedView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
