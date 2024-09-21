@@ -1,7 +1,7 @@
 from rest_framework import status, generics, permissions
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer, LoginSerializer
 from django.shortcuts import get_object_or_404
@@ -12,6 +12,7 @@ user = get_user_model()
 ##View for user registration
 class RegisterUser(generics.CreateAPIView):
     permission_classes = [AllowAny]
+    serializer_class = UserSerializer
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -24,6 +25,7 @@ class RegisterUser(generics.CreateAPIView):
 ##View for user login with token authentication
 class LoginUser(generics.GenericAPIView):
     permission_classes = [AllowAny]
+    serializer_class = LoginSerializer
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)

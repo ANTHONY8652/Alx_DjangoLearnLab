@@ -59,7 +59,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         token, created = Token.objects.get_or_create(user=obj)
         return token.key
 
-# Login Serializer
 """class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
@@ -80,6 +79,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             'token': token.key
         }
 """
+# Login Serializer
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
