@@ -14,9 +14,6 @@ class Notification(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
     is_read = models.BooleanField(default=False)
 
-    class Meta:
-        ordering = ['-created_at']
-
     def __str__(self):
         return f'{self.actor.username} {self.verb} {self.target}'
 
