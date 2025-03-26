@@ -41,6 +41,7 @@ class PostFilter(filters.FilterSet):
 ##Feed functionarity
 class FeedView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PostSerializer
 
     def get(self, request):
         following_users = request.user.following.all()
@@ -51,6 +52,7 @@ class FeedView(generics.GenericAPIView):
 ##Like views
 class LikeCreateAPIView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = PostSerializer
 
     def post(self, request, pk=None):
         post = generics.get_object_or_404(Post, pk=pk)
@@ -72,6 +74,7 @@ class LikeCreateAPIView(generics.CreateAPIView):
 
 class LikeDestroyAPIView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
+        
 
     def delete(self, request, pk=None):
         post = generics.get_object_or_404(Post, pk=pk)

@@ -49,7 +49,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password'],
-            bio=validated_data.get('bio', ''),
+            bio=validated_data.get('bio', '',blank=True),
             profile_picture=validated_data.get('profile_picture', None)
         )
         Token.objects.create(user=user)
@@ -79,7 +79,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             'token': token.key
         }
 """
-# Login Serializer
+##Revised Login Serializer
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
@@ -95,6 +95,7 @@ class LoginSerializer(serializers.Serializer):
         token, created = Token.objects.get_or_create(user=user)
         
         return {
+            'username': user.username,
             'token': token.key
         }
 

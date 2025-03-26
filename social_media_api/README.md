@@ -19,5 +19,5 @@ The **Social Media API** is a Django-based API that provides essential functiona
 First, clone the project repository and navigate into the project directory:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Alx_DjangoLearnLab.git
+git clone https://github.com/ANTHONY8652/Alx_DjangoLearnLab.git
 cd Alx_DjangoLearnLab/social_media_api
